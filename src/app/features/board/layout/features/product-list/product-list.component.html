@@ -1,0 +1,55 @@
+<section class="product-list">
+    <div class="product-list__options">
+        <form [formGroup]="searchForm">
+            <dev-input type="search" [formControlName]="'searchInput'" [placeholder]="'Search...'" />
+        </form>
+        <dev-button
+            (click)="redirectToAdd()"
+            buttonId="buttonAddProduct"
+            [label]="'Agregar'"
+        />
+    </div>
+    <div *ngIf="!loading" class="product-list__table">
+        <dev-table
+            [headerTemplate]="headerTemplate"
+            [bodyTemplate]="bodyTemplate"
+            [footerTemplate]="footerTemplate"
+        >
+            <ng-template #headerTemplate>
+                <tr>
+                    <th id="logo">Logo</th>
+                    <th id="name">Nombre del producto</th>
+                    <th id="description">Descripción</th>
+                    <th id="releaseDate">Fecha de liberación</th>
+                    <th id="restructuringDate">Fecha de reestructuración</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template #bodyTemplate>
+                @for (product of products | dataFilter : searchValue | limitTo: limit; track product) {
+                    <tr>
+                        <td>
+                            <img [ngSrc]="product.logo" 
+                                class="product-list__logo" 
+                                width="40" 
+                                height="40"
+                            />
+                        </td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.date_release | date: "dd/MM/yyyy" }}</td>
+                        <td>{{ product.date_revision | date: "dd/MM/yyyy" }}</td>
+                        <td></td>
+                    </tr>
+                }
+            </ng-template>
+            <ng-template #footerTemplate>
+                <dev-paginator 
+                    [countItems]="products.length" 
+                    [paginationRanges]="products.length | calculateLimits"
+                    (onLimitChange)="setLimit($event)"
+                />
+            </ng-template>
+        </dev-table>
+    </div>
+</section>

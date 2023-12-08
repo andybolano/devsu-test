@@ -1,0 +1,20 @@
+.product-list {
+    width: 100%;
+
+    &__options {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__table {
+        margin-top: 2rem;
+        background-color: var(--background-light);
+        padding: 2rem;
+    }
+
+    &__logo {
+        border-radius: 100%;
+    }
+}

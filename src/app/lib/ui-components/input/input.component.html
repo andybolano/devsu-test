@@ -1,0 +1,24 @@
+<div class="input">
+    <div class="input__label">
+        <label *ngIf="inputLabel" [for]="inputId">
+            {{ inputLabel }}
+        </label>
+    </div>
+    <input
+        #input
+        class="input__form"
+        [attr.id]="inputId"
+        [attr.type]="type"
+        [attr.name]="name"
+        [attr.placeholder]="placeholder"
+        [disabled]="disabled"
+        [readonly]="readonly"
+        [attr.required]="required"
+        (focus)="onInputFocus($event)"
+        (blur)="onInputBlur($event)"
+        (input)="onInputChange($event)"
+        (keyup)="onInputKeyUp($event)"
+        (keydown)="onInputKeydown($event)"
+        (keypress)="onInputKeyPress($event)"
+    />
+</div>

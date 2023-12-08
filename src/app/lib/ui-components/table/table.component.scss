@@ -1,0 +1,43 @@
+.table {
+    overflow-y: auto;
+
+    &__table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 1.4rem;
+
+        td,
+        th {
+            padding: 2rem;
+        }
+
+        thead {
+            tr {
+                background-color: #F9FAFC;
+                border-bottom: 0.1rem solid var(--gray);
+                text-align: left;
+                color: var(--secondary-color);
+            }
+            
+        }
+
+        tbody {
+            tr {
+                &:not(:last-child) {
+                    border-bottom: 0.1rem solid var(--gray);
+                }
+
+                td {
+                    padding: 1rem 2rem;
+                }
+
+            }
+        }
+
+        footer {
+            width: 100%;
+            padding: 2rem;
+        }
+
+    }
+}

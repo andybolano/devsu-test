@@ -1,0 +1,8 @@
+<div class="paginator">
+    <p>{{ countItems }} Resultados</p>
+    <select (change)="changeLimit($event)">
+        @for (item of paginationRanges; track item) {
+            <option>{{ item }}</option>
+        }
+    </select>
+</div>

@@ -1,1 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Roboto:wght@300&display=swap');
+
+:root {
+    --background-color: #F4F6F9;
+    --primary-color: #FFE900;
+    --secondary-color: #10255C;
+    --font-family: 'Open Sans', 'sans-serif';
+    --background-light: #FFFFFF;
+    --gray: #EBEBEB;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+  
+body {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+  
+
+html, body {
+    font-family: var(--font-family);
+}

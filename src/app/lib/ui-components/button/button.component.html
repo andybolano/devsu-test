@@ -1,0 +1,11 @@
+<button
+  class="button"
+  [attr.id]="buttonId"
+  [attr.type]="type"
+  (click)="onClick.emit($event)"
+  (focus)="onFocus.emit($event)"
+  (blur)="onBlur.emit($event)"
+>
+    {{ label  }}
+</button>
+
