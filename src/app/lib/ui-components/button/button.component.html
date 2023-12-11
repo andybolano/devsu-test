@@ -1,11 +1,13 @@
 <button
-  class="button"
-  [attr.id]="buttonId"
-  [attr.type]="type"
-  (click)="onClick.emit($event)"
-  (focus)="onFocus.emit($event)"
-  (blur)="onBlur.emit($event)"
+    class="button"
+    [class]="'button--'+variant"
+    [attr.id]="buttonId"
+    [attr.type]="type"
+    [disabled]="disabled"
+    (click)="onClick.emit($event)"
+    (focus)="onFocus.emit($event)"
+    (blur)="onBlur.emit($event)"
 >
-    {{ label  }}
+    {{ label }}
 </button>
 

@@ -21,14 +21,19 @@ import {
     FormsModule,
     NG_VALUE_ACCESSOR,
     NgControl,
-    ReactiveFormsModule 
+    ReactiveFormsModule, 
+    ValidationErrors
 } from '@angular/forms';
 
 export const INPUT_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef( () => InputComponent ),
     multi: true
-  };
+};
+
+interface ErrorMessageObject {
+    [key: string]: (params: any) => string;
+}
   
 @Component({
     selector: 'dev-input',
@@ -45,7 +50,6 @@ export const INPUT_VALUE_ACCESSOR = {
     encapsulation: ViewEncapsulation.None
 })
 export class InputComponent implements OnInit, ControlValueAccessor, AfterViewChecked {
-
     @Input() type: string = 'text';
     @Input() inputLabel: string;
     @Input() inputId: string;
@@ -54,7 +58,6 @@ export class InputComponent implements OnInit, ControlValueAccessor, AfterViewCh
     @Input() name: string;
     @Input() required: boolean;
     @Input() readonly: boolean;
-    @Input() validateThisEntry: boolean;
 
     @ViewChild('input', { static: true }) inputViewChild: ElementRef;
 
@@ -74,6 +77,12 @@ export class InputComponent implements OnInit, ControlValueAccessor, AfterViewCh
     public showCaptionContent: boolean;
     private control: NgControl;
 
+    public errorMessage: ErrorMessageObject = {
+        'required'  : ()  => `Este campo es requerido`,
+        'maxlength' : (params: any)  => `Maxino ${params.requiredLength} caracteres permitidos`,
+        'minlength' : (params: any)  => `Minimo ${params.requiredLength} caracteres permitidos`,
+    };
+
     constructor(
         private readonly cd: ChangeDetectorRef,
         @Inject(INJECTOR) private readonly injector: Injector
@@ -89,15 +98,23 @@ export class InputComponent implements OnInit, ControlValueAccessor, AfterViewCh
     }
 
     public ngOnInit(): void {
-        try {
-            this.control = this.injector.get(NgControl);
-        } catch (error) {
-            this.validateThisEntry = false;
-        }
+        this.control = this.injector.get(NgControl);
     }
 
-    get isValid(): boolean {
-        return this.control?.valid ? true : false;
+    get isInvalid(): boolean {
+        return !!(this.control?.invalid && (this.control?.dirty || this.control?.touched))
+    }
+
+    public listErrors(): string[] {
+        const errors = this.control.errors;
+
+        if (!this.isInvalid || !errors ) {
+            return [];
+        }
+
+       return Object.keys(errors)
+            .filter(error => this.control.touched || this.control.dirty)
+            .map(error => this.errorMessage[error](errors[error] as ValidationErrors));
     }
 
     public onInputBlur(event: Event): void {
@@ -119,7 +136,6 @@ export class InputComponent implements OnInit, ControlValueAccessor, AfterViewCh
     }
 
     public onInputKeyPress(event: KeyboardEvent) {
-
         if (this.type === 'number' && event.key === 'e') {
             event.preventDefault();
         }
@@ -149,22 +165,13 @@ export class InputComponent implements OnInit, ControlValueAccessor, AfterViewCh
         this.onModelTouched = fn;
     }
 
-    public setDisabledState(isDisabled: boolean): void {
-        this.disabled = isDisabled;
-        this.cd.markForCheck();
-    }
-
     public writeValue(value: unknown): void {
         if (this.inputViewChild?.nativeElement) {
             this.setInitialValueControl(value);
         }
     }
 
-    private setInitialValueControl(value: unknown) {
-        if (value === undefined || value === null) {
-            this.inputViewChild.nativeElement.value = '';
-        } else {
-            this.inputViewChild.nativeElement.value = value;
-        }
+    private setInitialValueControl(value: unknown): void {
+        this.inputViewChild.nativeElement.value = value === undefined || value === null ? '' : value
     }
 }

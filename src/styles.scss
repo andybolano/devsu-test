@@ -7,6 +7,7 @@
     --font-family: 'Open Sans', 'sans-serif';
     --background-light: #FFFFFF;
     --gray: #EBEBEB;
+    --error: #e53935;
 }
 
 * {
@@ -29,4 +30,8 @@ body {
 
 html, body {
     font-family: var(--font-family);
+}
+
+*:focus {
+    outline: none;
 }

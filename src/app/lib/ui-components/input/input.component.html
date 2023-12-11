@@ -1,12 +1,15 @@
 <div class="input">
-    <div class="input__label">
-        <label *ngIf="inputLabel" [for]="inputId">
-            {{ inputLabel }}
-        </label>
+    <div class="input__label" >
+        @if (inputLabel) {
+            <label [for]="inputId">
+                {{ inputLabel }}
+            </label>
+        }
     </div>
     <input
         #input
         class="input__form"
+        [ngClass]="{ 'input__form--error': isInvalid }"
         [attr.id]="inputId"
         [attr.type]="type"
         [attr.name]="name"
@@ -21,4 +24,11 @@
         (keydown)="onInputKeydown($event)"
         (keypress)="onInputKeyPress($event)"
     />
+    @if (isInvalid) {
+        <ng-container>
+            <caption>
+                {{ listErrors() }}
+            </caption>
+        </ng-container> 
+    }
 </div>

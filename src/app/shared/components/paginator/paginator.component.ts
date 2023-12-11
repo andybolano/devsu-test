@@ -11,7 +11,7 @@ export class PaginatorComponent {
   @Input() public countItems: number = 0;
   @Input() public paginationRanges: number[] = [];
 
-  @Output() private readonly onLimitChange: EventEmitter<number> = new EventEmitter();
+  @Output() public readonly onLimitChange: EventEmitter<number> = new EventEmitter();
 
   public changeLimit( event: Event ): void {
     this.onLimitChange.emit(+(event.target as HTMLTextAreaElement).value);

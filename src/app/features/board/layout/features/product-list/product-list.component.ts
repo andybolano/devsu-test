@@ -8,7 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ButtonComponent } from '@lib/ui-components/button/button.component';
 import { InputComponent } from '@lib/ui-components/input/input.component';
 import { EndPoints } from '@shared/dictionaries/end-points/end-points';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchForm } from '@shared/interfaces/search-form.interface';
 import { Product } from '@shared/interfaces/product.interface';
 import { DataFilterPipe } from '@shared/pipes/filter.pipes';
@@ -58,7 +58,7 @@ export class ProductListComponent implements OnInit {
         this.initReactiveSearchListener()
     }
 
-    private getProducts(): void {
+    public getProducts(): void {
         this.loading = true
         this.generalRequestService.get<Product[]>(this.endPoints.products().getAll())
             .pipe(
@@ -76,12 +76,12 @@ export class ProductListComponent implements OnInit {
     }
 
     private error(error: HttpErrorResponse): Observable<never> {
-        return throwError(error);
+        return throwError(() => error);
     }
 
     private getSearchForm (): FormGroup {
         return this.formConstructor.group({
-            searchInput:  ['', [ Validators.required]]
+            searchInput:  ['']
         }) as SearchForm;
     }
 

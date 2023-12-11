@@ -1,38 +1,58 @@
-<form  [formGroup]="registerProductForm">
-    <dev-input 
-        [inputLabel]="'ID'"
-        [inputId]="'id'"
-        [type]="'text'"
-        [formControlName]="'id'"
-    />
-    <dev-input 
-        [inputLabel]="'Nombre'"
-        [inputId]="'name'"
-        [type]="'text'"
-        [formControlName]="'name'"
-    />
-    <dev-input 
-        [inputLabel]="'Descripción'"
-        [inputId]="'description'"
-        [type]="'text'"
-        [formControlName]="'description'"
-    />
-    <dev-input 
-        [inputLabel]="'Logo'"
-        [inputId]="'logo'"
-        [type]="'text'"
-        [formControlName]="'logo'"
-    />
-    <dev-input 
-        [inputLabel]="'Fecha Liberación'"
-        [inputId]="'date_release'"
-        [type]="'date'"
-        [formControlName]="'date_release'"
-    />
-    <dev-input 
-        [inputLabel]="'Fecha Revisión'"
-        [inputId]="'date_revision'"
-        [type]="'date'"
-        [formControlName]="'date_revision'"
-    />
-</form>
+<div class="product-register">
+    <div class="product-register__header">
+        <h2>Formulario de Registro</h2>
+    </div>
+    <form class="product-register__form" [formGroup]="registerProductForm">
+        <dev-input 
+            [inputLabel]="'ID'"
+            [inputId]="'id'"
+            [type]="'text'"
+            [formControlName]="'id'"
+        />
+        <dev-input 
+            [inputLabel]="'Nombre'"
+            [inputId]="'name'"
+            [type]="'text'"
+            [formControlName]="'name'"
+        />
+        <dev-input 
+            [inputLabel]="'Descripción'"
+            [inputId]="'description'"
+            [type]="'text'"
+            [formControlName]="'description'"
+        />
+        <dev-input 
+            [inputLabel]="'Logo'"
+            [inputId]="'logo'"
+            [type]="'text'"
+            [formControlName]="'logo'"
+        />
+        <dev-input 
+            [inputLabel]="'Fecha Liberación'"
+            [inputId]="'date_release'"
+            [type]="'date'"
+            [formControlName]="'date_release'"
+        />
+        <dev-input 
+            [inputLabel]="'Fecha Revisión'"
+            [inputId]="'date_revision'"
+            [type]="'date'"
+            [formControlName]="'date_revision'"
+            [disabled]="true"
+        />
+    </form>
+    <div class="product-register__buttons">
+        <dev-button
+            (click)="resetForm()"
+            buttonId="buttonResetProduct"
+            [variant]="'secondary'"
+            [label]="'Limpiar'"
+        />
+        <dev-button
+            (click)="submitForm()"
+            buttonId="buttonRegisterProduct"
+            [label]="'Agregar'"
+            [disabled]="registerProductForm.invalid"
+        />
+    </div>
+</div>

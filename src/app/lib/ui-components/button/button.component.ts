@@ -14,6 +14,8 @@ export class ButtonComponent {
     @Input() public buttonId: string = '';
     @Input() public label: string = '';
     @Input() public type: string = 'button';
+    @Input() public disabled: boolean;
+    @Input() public variant: string = 'primary';
 
     @Output() public onBlur: EventEmitter<Event> = new EventEmitter();
     @Output() public onClick: EventEmitter<Event> = new EventEmitter();
